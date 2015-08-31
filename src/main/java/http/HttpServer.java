@@ -1,5 +1,8 @@
 package http;
 
+import processor.ServletProcessor;
+import processor.StaticResourceProcessor;
+
 import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -53,10 +56,23 @@ public class HttpServer {
                 Request request = new Request(in);
                 request.parse();
                 //创建Response对象
+                //autoflush:println()会自动刷新，print()不会
                 PrintWriter output = new PrintWriter(os,true);
                 Response response = new Response(output);
                 response.setRequest(request);
-                response.sendStaticResource();
+                /**
+                 * 如果URI为/**格式，则交给StaticResourceProcessor处理
+                 * 如果为/servlet/*，则交给ServletProcessor处理
+                 */
+                if(request.getUri().startsWith("/servlet")){
+                    ServletProcessor servletProcessor = new ServletProcessor(request,response);
+                }else{
+                    StaticResourceProcessor staticResourceProcessor = new StaticResourceProcessor(request,response);
+                    staticResourceProcessor.process();
+                }
+                
+
+
                 //检查URI是否为关闭命令
                 String uri = request.getUri();
                 shutdown = (uri==null?false:uri.equals(SHUT_DOWN_COMMAND));

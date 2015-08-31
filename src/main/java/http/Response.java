@@ -1,11 +1,14 @@
 package http;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.ServletResponse;
 import java.io.*;
+import java.util.Locale;
 
 /**
  * Created by Song on 2015/8/31.
  */
-public class Response {
+public class Response implements ServletResponse{
     private static final int BUFFER_SIZE= 1024;
 
     private PrintWriter output;
@@ -52,5 +55,68 @@ public class Response {
                 fileReader.close();
             }
         }
+    }
+
+    public String getCharacterEncoding() {
+        return null;
+    }
+
+    public String getContentType() {
+        return null;
+    }
+
+    public ServletOutputStream getOutputStream() throws IOException {
+        return null;
+    }
+
+    public PrintWriter getWriter() throws IOException {
+        if(output!=null){
+            return output;
+        }
+        return null;
+    }
+
+    public void setCharacterEncoding(String s) {
+
+    }
+
+    public void setContentLength(int i) {
+
+    }
+
+    public void setContentType(String s) {
+
+    }
+
+    public void setBufferSize(int i) {
+
+    }
+
+    public int getBufferSize() {
+        return 0;
+    }
+
+    public void flushBuffer() throws IOException {
+
+    }
+
+    public void resetBuffer() {
+
+    }
+
+    public boolean isCommitted() {
+        return false;
+    }
+
+    public void reset() {
+
+    }
+
+    public void setLocale(Locale locale) {
+
+    }
+
+    public Locale getLocale() {
+        return null;
     }
 }
