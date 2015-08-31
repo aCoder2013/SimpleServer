@@ -1,8 +1,6 @@
 package processor;
 
-import http.HttpServer;
-import http.Request;
-import http.Response;
+import http.*;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
@@ -57,8 +55,10 @@ public class ServletProcessor {
         }
         Servlet servlet = null;
         try {
+            RequestFacade requestFacade = new RequestFacade(request);
+            ResponseFacade responseFacade = new ResponseFacade(response);
             servlet = (Servlet) servletClass.newInstance();
-            servlet.service((ServletRequest)request,(ServletResponse)response);
+            servlet.service(requestFacade,responseFacade);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {

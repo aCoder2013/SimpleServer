@@ -14,7 +14,6 @@ public class SimpleServlet implements Servlet{
         writer.println("<h1>Run SimpleServlet#service()<h1>");
     }
 
-
     public ServletConfig getServletConfig() {
         return null;
     }
