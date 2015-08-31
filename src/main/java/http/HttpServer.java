@@ -66,11 +66,12 @@ public class HttpServer {
                  */
                 if(request.getUri().startsWith("/servlet")){
                     ServletProcessor servletProcessor = new ServletProcessor(request,response);
+                    servletProcessor.process();
                 }else{
                     StaticResourceProcessor staticResourceProcessor = new StaticResourceProcessor(request,response);
                     staticResourceProcessor.process();
                 }
-                
+
 
 
                 //检查URI是否为关闭命令

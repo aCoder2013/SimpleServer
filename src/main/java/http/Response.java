@@ -47,6 +47,9 @@ public class Response implements ServletResponse{
             }
             output.flush();
         } catch (FileNotFoundException e) {
+            //ÎÄ¼þÎ´ÕÒµ½
+            String errorMessage ="<h1>404<br>File Not Found</h1>";
+            output.write(errorMessage);
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
