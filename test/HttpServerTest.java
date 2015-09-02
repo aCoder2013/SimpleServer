@@ -1,4 +1,3 @@
-import http.HttpServer;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -9,11 +8,6 @@ import java.io.IOException;
 public class HttpServerTest {
 
 
-    @Test
-    public void awaitTest() throws IOException {
-        HttpServer server  = new HttpServer();
-        server.await();
-    }
 
     @Test
     public void parseUriTest(){

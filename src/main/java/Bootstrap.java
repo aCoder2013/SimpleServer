@@ -1,4 +1,4 @@
-import http.HttpServer;
+import connector.HttpConnector;
 
 import java.io.IOException;
 
@@ -9,7 +9,7 @@ import java.io.IOException;
 public class Bootstrap {
 
     public static void main(String[] args) throws IOException {
-        HttpServer server = new HttpServer();
-        server.await();
+        HttpConnector connector  = new HttpConnector();
+        connector.start();
     }
 }

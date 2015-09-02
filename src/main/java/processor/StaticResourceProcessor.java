@@ -1,10 +1,8 @@
 package processor;
 
-import http.Request;
-import http.Response;
+import http.HttpRequest;
+import http.HttpResponse;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import java.io.IOException;
 
 /**
@@ -13,10 +11,10 @@ import java.io.IOException;
  */
 public class StaticResourceProcessor {
 
-    private Request request;
-    private Response response ;
+    private HttpRequest request;
+    private HttpResponse response ;
 
-    public StaticResourceProcessor(Request request, Response response) {
+    public StaticResourceProcessor(HttpRequest request, HttpResponse response) {
             this.request = request;
             this.response = response;
     }

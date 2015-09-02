@@ -1,11 +1,12 @@
 package processor;
 
 import http.*;
+import util.Constants;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -17,23 +18,23 @@ import java.net.URLStreamHandler;
  * Created by Song on 2015/8/31.
  */
 public class ServletProcessor {
-    private Request request;
-    private Response response;
+    private HttpRequest request;
+    private HttpResponse response;
 
 
-    public ServletProcessor(Request request, Response response) {
+    public ServletProcessor(HttpRequest request, HttpResponse response) {
         this.request = request;
         this.response= response;
     }
 
     public void process(){
-        String uri = request.getUri();
+        String uri = request.getRequestURI();
         String servletName = uri.substring(uri.lastIndexOf("/")+1);
         URLClassLoader loader = null;
         try{
             URL[] urls = new URL[1];
             URLStreamHandler handler = null;
-            File classPath = new File(HttpServer.WEEB_ROOT);
+            File classPath = new File(Constants.WEEB_ROOT);
             String respository = (new URL("file",null,classPath.getCanonicalPath()+File.separator)).toString();
             urls[0] = new URL(null,respository,handler);
             loader = new URLClassLoader(urls);
@@ -55,10 +56,8 @@ public class ServletProcessor {
         }
         Servlet servlet = null;
         try {
-            RequestFacade requestFacade = new RequestFacade(request);
-            ResponseFacade responseFacade = new ResponseFacade(response);
             servlet = (Servlet) servletClass.newInstance();
-            servlet.service(requestFacade,responseFacade);
+            servlet.service(request,response);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
