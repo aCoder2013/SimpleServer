@@ -37,7 +37,7 @@ public class HttpRequest implements HttpServletRequest {
         return 0;
     }
 
-    public void addHeaders(String key ,String value){
+    public void addHeader(String key, String value){
         headers.put(key,value);
     }
 

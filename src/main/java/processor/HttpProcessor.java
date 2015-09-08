@@ -32,6 +32,8 @@ public class HttpProcessor {
             if (i != -1) {
                 parseRequest(buff,i);//处理请求行:GET /form.html HTTP/1.1
             }
+            //处理请求头
+//            parseHeaders(input,buff);
             if(request.getRequestURI().startsWith("/servlet/")){
                 ServletProcessor processor = new ServletProcessor(request,response);
                 processor.process();
@@ -40,6 +42,32 @@ public class HttpProcessor {
                 processor.process();
             }
             socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 处理请求头
+     * @param inputStream
+     */
+    private void parseHeaders(SocketInputStream inputStream,byte[] buff) {
+
+        try {
+            int i  = inputStream.readLine(buff,0,buff.length);
+            for(;i!=-1;i=inputStream.readLine(buff,0,buff.length)){
+                StringBuffer sb = new StringBuffer(i);
+                for(int j = 0;j<i;j++){
+                    sb.append((char)buff[j]);
+                }
+                String headerString = sb.toString();
+                int index = headerString.indexOf(":");
+                if(index!=-1){
+                    String key = headerString.substring(0,index);
+                    String value = headerString.substring(index+2,headerString.length()-2);
+                    request.addHeader(key,value);
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
